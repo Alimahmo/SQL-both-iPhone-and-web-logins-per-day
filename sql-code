@@ -1,0 +1,22 @@
+-- Write a SQL query to count the number of unique users per day who logged in from both iPhone and web,
+-- Where iPhone logs and web logs [log-ins] are in distinct relations.
+
+
+-- iPhone Table --> timestamp | user_id | sessionid
+-- web Table --> timestamp | user_id | sessionid
+
+
+-- The Code:
+
+SELECT  DATE_TRUNC ('day', i.ts) AS day,
+	      COUNT (DISTINCT i.user_id) AS num_users
+
+FROM iPhone i
+
+JOIN web w
+
+ON i.user_id = w.user_id
+
+AND DATE_TRUNC ('day', i.ts) = DATE_TRUNC ('day', w.ts)
+
+GROUP BY day
